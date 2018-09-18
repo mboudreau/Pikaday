@@ -653,7 +653,7 @@
 
             if (isDate(defDate)) {
                 if (opts.setDefaultDate) {
-                    self.setDate(defDate, true);
+                    self.setDate(defDate, true, true);
                 } else {
                     self.gotoDate(defDate);
                 }
@@ -784,7 +784,7 @@
         /**
          * set the current selection
          */
-        setDate: function(date, preventOnSelect)
+        setDate: function(date, preventOnSelect, preventChangeEvent)
         {
             if (!date) {
                 this._d = null;
@@ -815,7 +815,7 @@
                 this._o.onSelect.call(this, this.getDate());
             }
 
-            if (this._o.field) {
+            if (!preventChangeEvent && this._o.field) {
                 this._o.field.value = this.toString();
                 fireEvent(this._o.field, 'change', { firedBy: this });
             }
